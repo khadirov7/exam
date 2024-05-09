@@ -480,7 +480,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       image: product.images,
                                       name: product.name,
                                       price: product.price);
-                                  ;
                                 }
                               }),
                               Spacer(),
