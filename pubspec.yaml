@@ -29,6 +29,9 @@ dependencies:
   flutter_timezone: ^1.0.4
   permission_handler: ^11.3.1
   image_picker: ^1.0.7
+  flutter_screenutil: ^5.9.0
+  shimmer: ^3.0.0
+  lottie: ^3.1.0
 
 
 dev_dependencies:
@@ -42,3 +45,16 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
+    - assets/fonts/inter/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Black.otf
+        - asset: assets/fonts/inter/Inter-Bold.otf
+        - asset: assets/fonts/inter/Inter-Italic.otf
+        - asset: assets/fonts/inter/Inter-Light.otf
+        - asset: assets/fonts/inter/Inter-Medium.otf
+        - asset: assets/fonts/inter/Inter-Regular.otf
+        - asset: assets/fonts/inter/Inter-SemiBold.otf
