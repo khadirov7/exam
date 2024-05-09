@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nt_exam_4/data/models/product_model.dart';
 import 'package:nt_exam_4/screens/detail/detail_screen.dart';
+import 'package:nt_exam_4/screens/itemlist/widget/products_itemlist.dart';
 import '../../blocs/product/product_state.dart';
 import '../../blocs/product/products_bloc.dart';
 import '../../utils/colors/app_colors.dart';
@@ -251,15 +252,20 @@ class _ItemListScreenState extends State<ItemListScreen> {
                 ),
                 ...List.generate(state.products.length, (index) {
                   ProductModel product = state.products[index];
-                  if(widget.category == Category.Hammasi) {
+                  if (widget.category == Category.Hammasi) {
                     return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 5.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 5.h),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productModel: product)));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailScreen(
+                                              productModel: product)));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -282,7 +288,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                       SizedBox(width: 15.w),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             product.name,
@@ -305,7 +311,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                           Row(children: [
                                             ...List.generate(
                                               5,
-                                                  (index) => SvgPicture.asset(
+                                              (index) => SvgPicture.asset(
                                                   AppImages.star,
                                                   color: Colors.amber),
                                             ),
@@ -346,115 +352,39 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                 ),
                               )
                             ]));
-                  }
-                  else if(product.category == widget.category) {
+                  } else if (product.category == widget.category) {
                     return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 5.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 5.h),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productModel: product)));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6.w),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                        width: 1.h, color: AppColors.c_DEE2E7),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 12.h, horizontal: 14.w),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.network(
-                                        product.images,
-                                        fit: BoxFit.cover,
-                                        height: 84.h,
-                                        width: 84.w,
-                                      ),
-                                      SizedBox(width: 15.w),
-                                      Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            product.name,
-                                            style: TextStyle(
-                                              fontSize: 16.w,
-                                              color: AppColors.c_505050,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          SizedBox(height: 3.h),
-                                          Text(
-                                            "\$${product.price}",
-                                            style: TextStyle(
-                                              fontSize: 16.w,
-                                              color: Color(0xFF333333),
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          SizedBox(height: 3.h),
-                                          Row(children: [
-                                            ...List.generate(
-                                              5,
-                                                  (index) => SvgPicture.asset(
-                                                  AppImages.star,
-                                                  color: Colors.amber),
-                                            ),
-                                            SizedBox(width: 8.w),
-                                            Text(
-                                              "7.5",
-                                              style: TextStyle(
-                                                fontSize: 13.w,
-                                                color: Colors.amber,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                            SizedBox(width: 8.w),
-                                            SvgPicture.asset(AppImages.circle),
-                                            SizedBox(width: 8.w),
-                                            Text(
-                                              "${product.orders} orders",
-                                              style: TextStyle(
-                                                fontSize: 13.w,
-                                                color: AppColors.c_8B96A5,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ]),
-                                          SizedBox(height: 3.h),
-                                          Text(
-                                            "Free Shipping",
-                                            style: TextStyle(
-                                              fontSize: 13.w,
-                                              color: AppColors.c_00B517,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
+                              ProductItemListWidget(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => DetailScreen(
+                                                productModel: product)));
+                                  },
+                                  name: product.name,
+                                  image: product.images,
+                                  order: product.orders,
+                                  price: product.price)
                             ]));
-                  }else{
+                  } else {
                     return SizedBox();
                   }
                 }),
-                 Padding(
-                    padding: EdgeInsets.only(
-                        left: 18.0.w, top: 20.h, bottom: 10.h),
-                    child: Text("You may also like",
-                        style: TextStyle(
-                            color: AppColors.c_1C1C1C,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w700)),
-                  ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 18.0.w, top: 20.h, bottom: 10.h),
+                  child: Text("You may also like",
+                      style: TextStyle(
+                          color: AppColors.c_1C1C1C,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700)),
+                ),
                 Column(
                   children: [
                     SingleChildScrollView(
@@ -466,7 +396,11 @@ class _ItemListScreenState extends State<ItemListScreen> {
                             if (product.category == Category.Kiyimlar) {
                               return GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(productModel: product)));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailScreen(
+                                              productModel: product)));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -483,7 +417,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Image.network(
                                             product.images,
@@ -495,8 +429,8 @@ class _ItemListScreenState extends State<ItemListScreen> {
                                           Text("\$${product.price}",
                                               style: AppTextStyle.interMedium
                                                   .copyWith(
-                                                  color: AppColors.c_1C1C1C,
-                                                  fontSize: 16.sp)),
+                                                      color: AppColors.c_1C1C1C,
+                                                      fontSize: 16.sp)),
                                           SizedBox(height: 14.h),
                                           Text(
                                             product.name,
@@ -521,14 +455,11 @@ class _ItemListScreenState extends State<ItemListScreen> {
                         ],
                       ),
                     ),
-
                   ],
                 )
               ],
             );
           }
-        }
-        )
-    );
+        }));
   }
 }

@@ -3,7 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nt_exam_4/screens/detail/detail_screen.dart';
+import 'package:nt_exam_4/screens/home/widgets/discount_products.dart';
 import 'package:nt_exam_4/screens/home/widgets/drawer.dart';
+import 'package:nt_exam_4/screens/home/widgets/hour.dart';
+import 'package:nt_exam_4/screens/home/widgets/product_items.dart';
+import 'package:nt_exam_4/screens/home/widgets/products_gridview.dart';
+import 'package:nt_exam_4/screens/home/widgets/stack.dart';
 import 'package:nt_exam_4/screens/itemlist/item_list_screen.dart';
 import 'package:nt_exam_4/screens/route.dart';
 import 'package:nt_exam_4/utils/colors/app_colors.dart';
@@ -136,48 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Visibility(
                         visible: selectedCategory == Category.Hammasi,
-                        child: Stack(
-                          children: [
-                            Image.asset(AppImages.lastedNews),
-                            Positioned(
-                              top: 25.h,
-                              bottom: 0.h,
-                              left: 26.w,
-                              right: 0.w,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Latest trending",
-                                    style: TextStyle(
-                                        color: AppColors.c_1C1C1C,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    "Electronic items",
-                                    style: TextStyle(
-                                        color: AppColors.c_1C1C1C,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  TextButton(
-                                      style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                                  AppColors.white)),
-                                      onPressed: () {},
-                                      child: Text(
-                                        "Learn more",
-                                        style: TextStyle(
-                                            color: AppColors.c_0D6EFD,
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                ],
-                              ),
-                            ),
-                          ],
+                        child: const StackWidget(
+                          image: AppImages.lastedNews,
+                          title: "New Discount",
+                          subtitle: "gadgets image news",
                         ),
                       ),
                       Padding(
@@ -185,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14.0),
                               child: Column(
                                 children: [
                                   Text("Deals and offers",
@@ -201,76 +169,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 4),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 13.w, vertical: 6.h),
-                              decoration: BoxDecoration(
-                                  color: AppColors.c_EFF2F4
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "14",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 16.sp),
-                                  ),
-                                  Text(
-                                    "Hour",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 11.sp),
-                                  ),
-                                ],
-                              ),
+                            const TimeWidget(
+                              type: "Hour",
+                              time: "12",
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 4),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 13.w, vertical: 6.h),
-                              decoration: BoxDecoration(
-                                  color: AppColors.c_EFF2F4
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "52",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 16.sp),
-                                  ),
-                                  Text(
-                                    "Min  ",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 11.sp),
-                                  ),
-                                ],
-                              ),
+                            const TimeWidget(
+                              type: "Min  ",
+                              time: "38",
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 4),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 13.w, vertical: 6.h),
-                              decoration: BoxDecoration(
-                                  color: AppColors.c_EFF2F4
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "12",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 16.sp),
-                                  ),
-                                  Text(
-                                    "Sec  ",
-                                    style: AppTextStyle.interSemiBold.copyWith(
-                                        color: AppColors.c_8B96A5, fontSize: 11.sp),
-                                  ),
-                                ],
-                              ),
+                            const TimeWidget(
+                              type: "Sec  ",
+                              time: "57",
                             ),
                           ],
                         ),
                       ),
-
                       Visibility(
                         visible: selectedCategory == Category.Hammasi,
                         child: SingleChildScrollView(
@@ -280,63 +193,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               ...List.generate(state.products.length, (index) {
                                 ProductModel product = state.products[index];
                                 if (product.isDiscount == true) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      height: 180.h,
-                                      width: 140.w,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          border: Border.all(
-                                            color: AppColors.c_DEE2E7,
-                                            width: 1,
-                                          )),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 8.0.h),
-                                            child: Image.network(
-                                              product.images,
-                                              width: 76.w,
-                                              height: 83.h,
-                                            ),
-                                          ),
-                                          Text(product.name),
-                                          TextButton(
-                                              style: const ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStatePropertyAll(
-                                                          Color(0xFFFFE3E3))),
-                                              onPressed: () {},
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
-                                                child: Text(
-                                                  "-25%",
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return DiscountWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailScreen(
+                                                        productModel:
+                                                            product)));
+                                      },
+                                      image: product.images,
+                                      name: product.name);
                                 } else {
                                   return SizedBox();
                                 }
@@ -374,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Category.Mebellar &&
                                           selectedCategory ==
                                               Category.Hammasi) {
-                                        return GestureDetector(
+                                        return ProductItemsWidget(
                                             onTap: () {
                                               Navigator.push(
                                                   context,
@@ -384,39 +252,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               productModel:
                                                                   product)));
                                             },
-                                            child: Container(
-                                              height: 180.h,
-                                              width: 140.w,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                  border: Border.all(
-                                                    color: AppColors.c_DEE2E7,
-                                                    width: 1,
-                                                  )),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 8.0.h),
-                                                    child: Image.network(
-                                                      product.images,
-                                                      width: 76.w,
-                                                      height: 83.h,
-                                                    ),
-                                                  ),
-                                                  Text(product.name),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Text(
-                                                      "From USD ${product.price}"),
-                                                ],
-                                              ),
-                                            ));
+                                            image: product.images,
+                                            name: product.name,
+                                            price: product.price);
                                       } else {
                                         return SizedBox();
                                       }
@@ -480,49 +318,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     if (product.category ==
                                             Category.Qurilmalar &&
                                         selectedCategory == Category.Hammasi) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailScreen(
-                                                          productModel:
-                                                              product)));
-                                        },
-                                        child: Container(
-                                          height: 180.h,
-                                          width: 140.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              border: Border.all(
-                                                color: AppColors.c_DEE2E7,
-                                                width: 1,
-                                              )),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 8.0.h),
-                                                child: Image.network(
-                                                  product.images,
-                                                  width: 76.w,
-                                                  height: 83.h,
-                                                ),
-                                              ),
-                                              Text(product.name),
-                                              SizedBox(
-                                                height: 8.h,
-                                              ),
-                                              Text("From USD ${product.price}"),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+                                      return ProductItemsWidget(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailScreen(
+                                                            productModel:
+                                                                product)));
+                                          },
+                                          image: product.images,
+                                          name: product.name,
+                                          price: product.price);
                                     } else {
                                       return SizedBox();
                                     }
@@ -560,49 +368,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Visibility(
                         visible: selectedCategory == Category.Hammasi,
-                        child: Stack(
-                          children: [
-                            Image.asset(AppImages.suppliers),
-                            Positioned(
-                              top: 25.h,
-                              bottom: 0.h,
-                              left: 26.w,
-                              right: 0.w,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "An easy way to send",
-                                    style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    "requests to all suppliers",
-                                    style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  TextButton(
-                                      style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                                  Colors.lightBlue)),
-                                      onPressed: () {},
-                                      child: Text(
-                                        "Learn more",
-                                        style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: const StackWidget(
+                            image: AppImages.suppliers,
+                            title: "An easy way to send",
+                            subtitle: "requests to all suppliers"),
                       ),
                       Visibility(
                         visible: selectedCategory == Category.Hammasi,
@@ -617,151 +386,73 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: selectedCategory == Category.Hammasi,
-                        child: SizedBox(
-                          height: 280.h,
-                          child: GridView.count(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 2.w,
-                            mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
-                            children: [
-                              ...List.generate(state.products.length, (index) {
-                                ProductModel product = state.products[index];
-                                {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            product.description,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
+                          visible: selectedCategory == Category.Hammasi,
+                          child: SizedBox(
+                              height: 280.h,
+                              child: GridView.count(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.w),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 2.w,
+                                  mainAxisSpacing: 8.h,
+                                  childAspectRatio: 0.66786,
+                                  children: [
+                                    ...List.generate(state.products.length,
+                                        (index) {
+                                      ProductModel product =
+                                          state.products[index];
+                                      {
+                                        return ProductsGridViewWidget(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DetailScreen(
+                                                              productModel:
+                                                                  product)));
+                                            },
+                                            image: product.images,
+                                            name: product.name,
+                                            price: product.price);
+                                      }
+                                    }),
+                                    Spacer(),
+                                  ]))),
                       Visibility(
-                        visible: selectedCategory == Category.Qurilmalar,
-                        child: SizedBox(
-                          height: height,
-                          child: GridView.count(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 2.w,
-                            mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
-                            children: [
-                              ...List.generate(state.products.length, (index) {
-                                ProductModel product = state.products[index];
-                                {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            "T-shirts with multiple colors, for men",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                              Spacer()
-                            ],
-                          ),
-                        ),
-                      ),
+                          visible: selectedCategory == Category.Qurilmalar,
+                          child: SizedBox(
+                              height: height,
+                              child: GridView.count(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 2.w,
+                                mainAxisSpacing: 8.h,
+                                childAspectRatio: 0.66786,
+                                children: [
+                                  ...List.generate(state.products.length,
+                                      (index) {
+                                    ProductModel product =
+                                        state.products[index];
+                                    {
+                                      return ProductsGridViewWidget(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailScreen(
+                                                            productModel:
+                                                                product)));
+                                          },
+                                          image: product.images,
+                                          name: product.name,
+                                          price: product.price);
+                                    }
+                                  }),
+                                  Spacer()
+                                ],
+                              ))),
                       Visibility(
                         visible: selectedCategory == Category.Akksessuarlar,
                         child: SizedBox(
@@ -776,58 +467,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               ...List.generate(state.products.length, (index) {
                                 ProductModel product = state.products[index];
                                 {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            "T-shirts with multiple colors, for men",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return ProductsGridViewWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailScreen(
+                                                        productModel:
+                                                            product)));
+                                      },
+                                      image: product.images,
+                                      name: product.name,
+                                      price: product.price);
+                                  ;
                                 }
                               }),
                               Spacer(),
@@ -836,78 +489,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: selectedCategory == Category.Kiyimlar,
-                        child: SizedBox(
-                          height: height,
-                          child: GridView.count(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 2.w,
-                            mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
-                            children: [
-                              ...List.generate(state.products.length, (index) {
-                                ProductModel product = state.products[index];
-                                {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            "T-shirts with multiple colors, for men",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ),
+                          visible: selectedCategory == Category.Kiyimlar,
+                          child: SizedBox(
+                              height: height,
+                              child: GridView.count(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 2.w,
+                                mainAxisSpacing: 8.h,
+                                childAspectRatio: 0.66786,
+                                children: [
+                                  ...List.generate(state.products.length,
+                                      (index) {
+                                    ProductModel product =
+                                        state.products[index];
+                                    {
+                                      return ProductsGridViewWidget(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailScreen(
+                                                            productModel:
+                                                                product)));
+                                          },
+                                          image: product.images,
+                                          name: product.name,
+                                          price: product.price);
+                                    }
+                                  }),
+                                  Spacer(),
+                                ],
+                              ))),
                       Visibility(
                         visible: selectedCategory == Category.Kitoblar,
                         child: SizedBox(
@@ -922,58 +536,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ...List.generate(state.products.length, (index) {
                                 ProductModel product = state.products[index];
                                 {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            "T-shirts with multiple colors, for men",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return ProductsGridViewWidget(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailScreen(
+                                                        productModel:
+                                                            product)));
+                                      },
+                                      image: product.images,
+                                      name: product.name,
+                                      price: product.price);
                                 }
                               }),
                               Spacer(),
@@ -982,78 +557,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: selectedCategory == Category.Mebellar,
-                        child: SizedBox(
-                          height: height,
-                          child: GridView.count(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 2.w,
-                            mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
-                            children: [
-                              ...List.generate(state.products.length, (index) {
-                                ProductModel product = state.products[index];
-                                {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      productModel: product)));
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.h, horizontal: 11.w),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                        border: Border.all(
-                                          color: AppColors.c_DEE2E7,
-                                          width: 1.w,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            product.images,
-                                            width: 143.w,
-                                            height: 143.h,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          SizedBox(height: 14.h),
-                                          Text("\$${product.price}",
-                                              style: AppTextStyle.interMedium
-                                                  .copyWith(
-                                                      color: AppColors.c_1C1C1C,
-                                                      fontSize: 16.sp)),
-                                          SizedBox(height: 14.h),
-                                          Text(
-                                            "T-shirts with multiple colors, for men",
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.interRegular
-                                                .copyWith(
-                                              color: AppColors.c_8B96A5,
-                                              fontSize: 13.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                              Spacer()
-                            ],
-                          ),
-                        ),
-                      ),
+                          visible: selectedCategory == Category.Mebellar,
+                          child: SizedBox(
+                              height: height,
+                              child: GridView.count(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 2.w,
+                                mainAxisSpacing: 8.h,
+                                childAspectRatio: 0.66786,
+                                children: [
+                                  ...List.generate(state.products.length,
+                                      (index) {
+                                    ProductModel product =
+                                        state.products[index];
+                                    {
+                                      return ProductsGridViewWidget(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailScreen(
+                                                            productModel:
+                                                                product)));
+                                          },
+                                          image: product.images,
+                                          name: product.name,
+                                          price: product.price);
+                                    }
+                                  }),
+                                  Spacer()
+                                ],
+                              )))
                     ],
                   );
                 }
@@ -1065,5 +601,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-//
