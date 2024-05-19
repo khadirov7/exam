@@ -395,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 2.w,
                                   mainAxisSpacing: 8.h,
-                                  childAspectRatio: 0.66786,
+                                  childAspectRatio: 0.62100,
                                   children: [
                                     ...List.generate(state.products.length,
                                         (index) {
@@ -428,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 2.w,
                                 mainAxisSpacing: 8.h,
-                                childAspectRatio: 0.66786,
+                                childAspectRatio: 0.62100,
                                 children: [
                                   ...List.generate(state.products.length,
                                       (index) {
@@ -462,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 2.w,
                             mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
+                            childAspectRatio: 0.62100,
                             children: [
                               ...List.generate(state.products.length, (index) {
                                 ProductModel product = state.products[index];
@@ -496,7 +496,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 2.w,
                                 mainAxisSpacing: 8.h,
-                                childAspectRatio: 0.66786,
+                                childAspectRatio: 0.62100,
                                 children: [
                                   ...List.generate(state.products.length,
                                       (index) {
@@ -530,7 +530,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 2.w,
                             mainAxisSpacing: 8.h,
-                            childAspectRatio: 0.66786,
+                            childAspectRatio: 0.62100,
                             children: [
                               ...List.generate(state.products.length, (index) {
                                 ProductModel product = state.products[index];
@@ -564,7 +564,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 2.w,
                                 mainAxisSpacing: 8.h,
-                                childAspectRatio: 0.66786,
+                                childAspectRatio: 0.62100,
                                 children: [
                                   ...List.generate(state.products.length,
                                       (index) {
